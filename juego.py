@@ -12,3 +12,4 @@ opcion_usuario = input("Elige una opción (1, 2 o 3): ")
 
 # Mostramos el resultado (sin validación ni lógica avanzada)
 print("Tú elegiste la opción:", opcion_usuario)
+

@@ -40,7 +40,7 @@ git push origin main
 
 Después de realizar este tema solo se hacen actualizaciones al documento usando los mismos comandos anteriormente mencionados.
 
-# Desarrolo del código para el juego Piedra, Papel, tijeras
+# Desarrollo del código para el juego Piedra, Papel, tijeras
 
 Avanazamos hasta la siguiente parte en la generación del código para el programa esocogido en el Trabajo Autónomo 1. En este se avanzo con lo siguiente que se ha aprendido en clase. Además con un poco de investigación y ejemplos encontrados en el buscador se pudo desarrollar lo siguiente:
 

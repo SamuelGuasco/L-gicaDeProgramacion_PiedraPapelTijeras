@@ -18,6 +18,8 @@ Esta fue la primera vez que realizó un proceso como este. Primero investigue so
 1. Se clonó el repositorio en la computadora utilizando el siguiente comando:
 
    git clone https://github.com/SamuelGuasco/L-gicaDeProgramacion_PiedraPapelTijeras.git
+
+   Se utilizó este comando en vez de git init que sirve para crear un repositorio desde cero porque al crear mi cuenta en github pensé que solo había que crear el repositorio y subir los archivos de manera manual al repositorio creado y no sabia que se podía hacer desde la terminal. Despúes de seguir investigando me di cuenta de ello, pero lo que era más recomendale era clonar ese repositorio a pesar de que esta sin nada de archivos para configurar mi respositorio en mi computadora.
    
 2. luego se utilizo el siguiente comando:
 
@@ -98,3 +100,4 @@ else:
     print("Perdiste")
 
 print("Gracias por jugar.")
+

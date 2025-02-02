@@ -64,6 +64,9 @@ Este diagrama lo pueden encontrar en la carpeta Diagramas_UML.
 
 Estos son diagramas y arquitectura anteriormente presentada en el Trabajo Autónomo 1. En este se hizo una edición sobre el diagrama de clases en el que se aumento o se edito algunos métodos. El otro diagrama y arquitectura premaneció de la misma forma porque sigue usando los mismos componente y la misma lógica dentro de la arquitectura.
 
+# Explicación del código
+
+El código del juego Piedra, Papel o Tijeras en Python permite al usuario elegir una opción mediante input(), mientras que la computadora selecciona su jugada de manera fija. Luego, el programa compara ambas elecciones usando if-elif-else para determinar si el usuario gana, pierde o empata. Si el usuario ingresa una opción incorrecta, el código muestra un mensaje y finaliza el juego. Finalmente, se da la opción de jugar nuevamente, permitiendo repetir la partida sin reiniciar el programa manualmente.
 
 # Desarrollo del código para el juego Piedra, Papel, tijeras
 
@@ -123,5 +126,6 @@ else:
     print("Perdiste")
 
 print("Gracias por jugar.")
+
 
 

@@ -42,6 +42,29 @@ git push origin main
 
 Después de realizar este tema solo se hacen actualizaciones al documento usando los mismos comandos anteriormente mencionados.
 
+# Diagramas UML 
+
+En el trabajo Autónomo 1 se realizarón algunos diagramas. En lo personal yo realice el diagrama de clases y el diagrama de componentes. Además, se desarrollo la arquitectura de software. En este trabajo añadimos subimos esos diagramas realizados anteriormente en el Autónomo 1 pero creamo el diagrama de flujo y el diagrama de uso de casos. Para ello hicimos lo siguiente:
+
+# Diagrama de Flujo UML
+
+Este fue el primer diagrama que cree para este trabajo práctico y de investigación. En este utilice la herramienta de Miro para diseñarlo. Este Diagrama de Flujo esta bastante detallado comenzado dedes el inicio de juego luego avanzando a la entrada del programa en donde se da la bienvenida al usuario
+luego a las opciónes que el usuario puede escoger que sería Piedra, Papel, o tijeras. En este, se ven definidas por números que sería 1,2 y 3. Luego el usuario sabía que podía escoger entre una de esa opciones. Adicional, se estableció las reglas del juego en donde prácticamente se define la relación entre los componente del juego y que gana a quien.
+Luego se hicieron los procesos para responder la pregunta de lo que pasaría dentro del programa. Además, se ilustra tambien el comportamiento de la computadora, que pasa si el usuario no ecsoge ninguna opción para que todo sea unificado y pueda ser fácil de entender. El diagrama de flujo fue estructurado en bloques secuenciales y condicionales para 
+garantizar un flujo lógico claro y bien organizado. Además, se incorporaron decisiones interactivas, asegurando que el usuario tenga una experiencia controlada dentro del juego. Este modelo sirve como base fundamental para la implementación en código, facilitando el desarrollo del juego en futuras etapas. Se puede encontrar las imagenes del diagrama de flujo en la carpeta DiagramaDeFlujo dentro del repositorio.
+
+# Diagrama de Casos de Uso
+
+Otro de los diagramas creados para el trabajo Autónomo 1 es el de casos de uso. Este diagrama sirve para visualizar como funciona el compartamiento de ambas partes que sería usuario y computadora dentro del juego Piedra, Papel y Tijeras. En este diagrama
+cada actor tiene diferentes interacciones con el sistema que estan representados por ovalos. En este encontramos: Iniciar Juego, Elegir Opción, Ver Resultados, Generar Opciones, Evaluar Resultados y como cada uno de los actores interactuan en algunas ocasiones de manera independiente y en otras de manera conjunta.
+Además, se uso la relación <<include>> para Evaluar Resultados porque esta siempre debe ser evaluada antes de ser mostrada. El diagrama de casos de uso de "Piedra, Papel o Tijeras" proporciona una visión clara de cómo los jugadores interactúan con la aplicación y cómo se estructuran las funcionalidades internas. Al identificar actores, relaciones y dependencias, este diagrama facilita el diseño y la implementación del juego, asegurando una lógica bien definida en su desarrollo.
+Este diagrama lo pueden encontrar en la carpeta Diagramas_UML.
+
+# Diagrama de Clases, Componentes y Arquitectura de software
+
+Estos son diagramas y arquitectura anteriormente presentada en el Trabajo Autónomo 1. En este se hizo una edición sobre el diagrama de clases en el que se aumento o se edito algunos métodos. El otro diagrama y arquitectura premaneció de la misma forma porque sigue usando los mismos componente y la misma lógica dentro de la arquitectura.
+
+
 # Desarrollo del código para el juego Piedra, Papel, tijeras
 
 Avanazamos hasta la siguiente parte en la generación del código para el programa esocogido en el Trabajo Autónomo 1. En este se avanzo con lo siguiente que se ha aprendido en clase. Además con un poco de investigación y ejemplos encontrados en el buscador se pudo desarrollar lo siguiente:
@@ -100,4 +123,5 @@ else:
     print("Perdiste")
 
 print("Gracias por jugar.")
+
 

@@ -57,7 +57,7 @@ garantizar un flujo lógico claro y bien organizado. Además, se incorporaron de
 
 Otro de los diagramas creados para el trabajo Autónomo 1 es el de casos de uso. Este diagrama sirve para visualizar como funciona el compartamiento de ambas partes que sería usuario y computadora dentro del juego Piedra, Papel y Tijeras. En este diagrama
 cada actor tiene diferentes interacciones con el sistema que estan representados por ovalos. En este encontramos: Iniciar Juego, Elegir Opción, Ver Resultados, Generar Opciones, Evaluar Resultados y como cada uno de los actores interactuan en algunas ocasiones de manera independiente y en otras de manera conjunta.
-Además, se uso la relación <<include>> para Evaluar Resultados porque esta siempre debe ser evaluada antes de ser mostrada. El diagrama de casos de uso de "Piedra, Papel o Tijeras" proporciona una visión clara de cómo los jugadores interactúan con la aplicación y cómo se estructuran las funcionalidades internas. Al identificar actores, relaciones y dependencias, este diagrama facilita el diseño y la implementación del juego, asegurando una lógica bien definida en su desarrollo.
+Además, se uso la relación include para Evaluar Resultados porque esta siempre debe ser evaluada antes de ser mostrada. El diagrama de casos de uso de "Piedra, Papel o Tijeras" proporciona una visión clara de cómo los jugadores interactúan con la aplicación y cómo se estructuran las funcionalidades internas. Al identificar actores, relaciones y dependencias, este diagrama facilita el diseño y la implementación del juego, asegurando una lógica bien definida en su desarrollo.
 Este diagrama lo pueden encontrar en la carpeta Diagramas_UML.
 
 # Diagrama de Clases, Componentes y Arquitectura de software

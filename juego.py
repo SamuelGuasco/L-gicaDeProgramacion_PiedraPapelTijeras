@@ -24,7 +24,7 @@ def mostrar_menu(): # Esta función se creó para que el usuario pueda ver la pr
         print("4. Ver estadísticas")
         print("5. Salir")
 
-        opcion = input("Seleccione una opción (1-5): ")
+        opcion = input("Seleccione una opción (1-5): ") # Se utilizó input para que el usuario pueda seleccionar una opción.
 # Se dirige a la función correspondiente, dependiendo de que opción se escoja
         if opcion == "1":
             mostrar_reglas()
@@ -44,7 +44,8 @@ def mostrar_menu(): # Esta función se creó para que el usuario pueda ver la pr
 
 def mostrar_reglas(): # Esta función muestra las reglas. Se creó para que los jugadores puedan ver las reglas antes de jugar o incluso al inicio de la partida.
     """Muestra las reglas del juego antes de empezar"""
-    print("\n📜 REGLAS DEL JUEGO 📜")
+    # Print se usa basntante en el código porque es fácil de usar y mayormente la usó para mostrar el texto o lo que se desea mostrar al usuario
+    print("\n📜 REGLAS DEL JUEGO 📜") 
     print("1️⃣ Piedra vence a Tijeras, Tijeras vence a Papel, y Papel vence a Piedra.")
     print("2️⃣ Si ambos jugadores eligen la misma opción, es un empate.")
     print("3️⃣ En modo multijugador, cada jugador elige en secreto su opción.")
@@ -63,12 +64,12 @@ def jugar_contra_pc(): # Esta función es creada para que el jugador 1 pueda jug
             if rondas <= 0:
                 print("Debe ingresar un número mayor a 0.")
                 continue
-            break # Se agrega un bucle para permitir repetir el juego si el jugador lo desea.
+            break # Se agrega un bucle si la entrada es válida
         except ValueError:
             print("Entrada inválida. Ingrese un número válido.")
 
-    while True:  
-        for ronda in range(rondas):
+    while True:  # Este bucle es para mantener el juego activo hasta que el jugador desee salir
+        for ronda in range(rondas): #Se usa for para que el jugador pueda decir el número de rondas
             print(f"\n🔄 Ronda {ronda + 1} de {rondas}")
             print("\nOpciones: 1) Piedra  2) Papel  3) Tijeras")
 # Se obtiene la elección del jugador con tiempo
@@ -78,6 +79,9 @@ def jugar_contra_pc(): # Esta función es creada para que el jugador 1 pueda jug
                 print(f"⏳ Se acabó el tiempo, {nombre_jugador} pierde esta ronda automáticamente.")
                 estadisticas["computadora_ganadas"] += 1
                 estadisticas["total_partidas"] += 1
+
+                estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} perdió - Computadora ganó")
+
                 continue # Pasa a la siguiente ronda
 
             eleccion_usuario = opciones[int(eleccion_usuario) - 1]
@@ -97,9 +101,9 @@ def jugar_contra_pc(): # Esta función es creada para que el jugador 1 pueda jug
             else:
                 print("\n💻 ¡La computadora gana esta ronda! 😞")
                 estadisticas["computadora_ganadas"] += 1
-#ESTA PARTE FUE MODIFICADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            estadisticas["total_partidas"] += 1 # Se incrementa el total de partidas después de registrar la partida
 
+            estadisticas["total_partidas"] += 1 # Se incrementa el total de partidas después de registrar la partida
+            #Esta parte utilizamos las condicionales para registrar el historial además se usó append para poder guardar los registros de las rondas anteriores.
             if resultado == "jugador1":
                 estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} ganó - Computadora perdió")
             elif resultado == "empate":
@@ -107,7 +111,6 @@ def jugar_contra_pc(): # Esta función es creada para que el jugador 1 pueda jug
             else:
                 estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} perdió - Computadora ganó")
             
-#ESTA PARTE FUE MODIFCADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         if not jugar_otra_vez():
             break  # Si el jugador no quiere jugar de nuevo, sale del bucle y vuelve al menú principal
 
@@ -121,12 +124,12 @@ def jugar_multijugador(): # Esta función es creada para que se pueda jugar con 
 
     while True: # Se mantiene el bucle para que los jugadores puedan repetir el juego si así lo desean.
         try:
-            rondas = int(input(f"{jugador_1} y {jugador_2}, ¿cuántas rondas desean jugar? (Ingrese un número): "))
+            rondas = int(input(f"{jugador_1} y {jugador_2}, ¿cuántas rondas desean jugar? (Ingrese un número): ")) #En esta aprte se utilizó int para que ingresen números enteres e input para que el jugador pueda poner el número
             if rondas <= 0:
                 print("Debe ingresar un número mayor a 0.")
                 continue
             break
-        except ValueError:
+        except ValueError: #Esta fue para cuando registran un valor no valido
             print("Entrada inválida. Ingrese un número válido.")
 
     while True:  # Se agrega un bucle para repetir el juego
@@ -168,22 +171,22 @@ def jugar_multijugador(): # Esta función es creada para que se pueda jugar con 
 
 def obtener_eleccion_tiempo(mensaje, ocultar=False): # Esta función nos permite añadir el temporizador, si el jugador se tarda mucho pierde y el otro gana.
     """Función que permite ingresar una opción con un tiempo límite"""
-    eleccion = [None]
+    eleccion = [None] #Se usa una Lista para poder modificar su valor dentro del temporizador
 
-    def temporizador():
-        time.sleep(10)
-        if eleccion[0] is None:
+    def temporizador(): #Esta se define como una función que actúa como el temporizador.
+        time.sleep(10) #La función espera 10 segundo antes continuar.
+        if eleccion[0] is None: #Esto verifica si el usuario no ha escogido la opción durante los 10 segundos. En caso de no insertar nada se imprime que se acabo el tiempo.
             print("\n⏳ Se acabó el tiempo, perdiste esta ronda automáticamente.")
 
-    thread = threading.Thread(target=temporizador)
-    thread.start()
+    thread = threading.Thread(target=temporizador) # En esta parte se utilizó la biblioteca de Threading para que se pueda crear el temproizador
+    thread.start() # Esto para que la cuenta regresiva comience
 
-    if ocultar:
-        eleccion[0] = getpass.getpass(mensaje)
+    if ocultar: #Esto es para que se pueda ocultar las opciones en el modo multijugador
+        eleccion[0] = getpass.getpass(mensaje) # Se usó la biblioteca de getpass para ocultar las entradas de las opciones en el modo multijugador
     else:
-        eleccion[0] = input(mensaje)
+        eleccion[0] = input(mensaje) #input en esta parte nos permite capturar la entrada normalmente a pesar de que no pueda verse
 
-    return eleccion[0]
+    return eleccion[0] # Se devuelve a la elección
 
 def determinar_ganador(jugador1, jugador2): # Esta función es para definir la lógica para comparar las elecciones y definir un ganador
     """Determina el resultado de la partida"""
@@ -201,7 +204,7 @@ def determinar_ganador(jugador1, jugador2): # Esta función es para definir la l
 def actualizar_estadisticas(resultado, jugador1, jugador2): # Esta función permite llevar un registro de las partidas jugadas de los jugadores
     """Actualiza las estadísticas del juego y almacena el historial de cada partida"""
     estadisticas["total_partidas"] += 1
-
+# El historial almacena cada partida con su número y el resultado correspondiente.
     if resultado == "jugador1":
         estadisticas["jugador_1_ganadas"] += 1
         estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {jugador1} ganó - {jugador2} perdió")

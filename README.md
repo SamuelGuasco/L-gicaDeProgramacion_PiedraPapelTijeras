@@ -62,8 +62,7 @@ Esta fue la primera vez que realizó un proceso como este. Primero investigue so
     Todas estas librerías estan incluidas en python, por lo que no se tuvo que hacer ninguna instalación fuera del entorno ya implementado. Solo se importó directamente.
 
 # Estructura del Repositorio
-
-![alt text](image.png)
+```L-gicaDeProgramación_PiedraPapelTijeras/ │── DiagramaDe_Flujo/ │ ├── DiagramaDeFlujoTA2/ (Diagramas de flujo anteriores) │ ├── DiagramaDeFlujoTA3/ (Diagramas de flujo actualizados) │ │ ├── DiagramaDeFlujoParte1.png │ │ ├── DiagramaDeFlujoParte2.png │ │── Diagramas_UML/ │ ├── DiagramasUMLTA2/ (Diagramas UML anteriores) │ ├── DiagramasUMLTA3/ (Diagramas UML actualizados) │ │ ├── DiagramaCasosDeUsoTA3.png │ │── juego.py (Código principal) │── README.md (Documento escrito según lo que nos pidió en clase)```
 
 La estructura del repositorio está organizada en carpetas que agrupan los diferentes elementos del proyecto de manera clara y estructurada. Dentro del repositorio principal, se encuentran dos carpetas principales: DiagramaDeFlujo y DiagramasUML. En DiagramaDeFlujo, hay subcarpetas correspondientes a cada tarea, permitiendo conservar versiones anteriores y la versión más reciente de los diagramas en archivos de imagen bien identificados. De la misma, en DiagramasUML, se almacenan diagramas relevantes, como el de casos de uso, arquitectura del software y diagrama de clases, organizados pora la la tarea anterior y el que se actualizó para esta tarea fue el diagrama de casos de uso. Además, el archivo principal del código, juego.py, está ubicado en el repositorio para que se fácil de encontrar, junto con el archivo README.md, que contiene información esencial sobre el proyecto, su instalación y uso. Esta organización permite una fácil navegación asegurando que toda la información relevante esté disponible para su revisión y actualización.
 

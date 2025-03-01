@@ -54,6 +54,7 @@ Esta fue la primera vez que realizó un proceso como este. Primero investigue so
 
 # Liberías utilizadas
     
+    - Sys: Esta sirivió para capturar entradas y mejorar la interacción
     - Random: Esta se uso para generar la elección aleatoria de la computadora
     - Getpass: Esta permite que en el modo multijugador las opciones que escoge cada usuario sea secreta
     - Threading: Implementa un temporizador para limitar el tiempo de respuesta

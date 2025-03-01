@@ -1,4 +1,6 @@
 # Juego Piedra, Papel o Tijeras con lógica de comparación
+# Importación de librerías necesarias
+import sys # Proporciona acceso a funciones y variables del sistema, como la entrada estándar
 import random  # Para la elección aleatoria de la computadora
 import getpass  # Para ocultar la entrada en modo multijugador
 import threading  # Para implementar el temporizador
@@ -11,7 +13,7 @@ estadisticas = {
     "jugador_2_ganadas": 0, # Veces que ha ganado el jugador 2
     "computadora_ganadas": 0, # Veces que ha ganado la computadora esto para cuando se juega en modo solo
     "empates": 0, #número de empates
-    "historico": []
+    "historico": [] # Lista que almacena el historial de todas las partidas jugadas
 }
 
 def mostrar_menu(): # Esta función se creó para que el usuario pueda ver la primera interacción y decidir que hacer. Esta sería la función principal.
@@ -27,7 +29,7 @@ def mostrar_menu(): # Esta función se creó para que el usuario pueda ver la pr
         opcion = input("Seleccione una opción (1-5): ") # Se utilizó input para que el usuario pueda seleccionar una opción.
 # Se dirige a la función correspondiente, dependiendo de que opción se escoja
         if opcion == "1":
-            mostrar_reglas()
+            mostrar_reglas() # Se muestran las reglas antes de comenzar el juego
             jugar_contra_pc()
         elif opcion == "2":
             mostrar_reglas()
@@ -51,70 +53,76 @@ def mostrar_reglas(): # Esta función muestra las reglas. Se creó para que los 
     print("3️⃣ En modo multijugador, cada jugador elige en secreto su opción.")
     print("4️⃣ El juego continúa hasta que decidas salir.\n")
 
-def jugar_contra_pc(): # Esta función es creada para que el jugador 1 pueda jugar solo contra la computadora quien puede escoger una opción aleatoria
+def jugar_contra_pc():
     """Modo de juego contra la computadora"""
-    opciones = ["Piedra", "Papel", "Tijeras"]
+    opciones = ["Piedra", "Papel", "Tijeras"] # Lista de opciones disponibles
 
     print("\n🔹 Modo: Jugador vs Computadora")
     nombre_jugador = input("Ingrese su nombre: ")
-
-    while True: # Este es bucle que permite repetir el juego si el jugador lo desea.
+    #Solicita la cantidad de rondas que desea jugar el usuario
+    while True:
         try:
             rondas = int(input(f"{nombre_jugador}, ¿cuántas rondas deseas jugar? (Ingrese un número): "))
             if rondas <= 0:
                 print("Debe ingresar un número mayor a 0.")
                 continue
-            break # Se agrega un bucle si la entrada es válida
+            break
         except ValueError:
             print("Entrada inválida. Ingrese un número válido.")
-
-    while True:  # Este bucle es para mantener el juego activo hasta que el jugador desee salir
-        for ronda in range(rondas): #Se usa for para que el jugador pueda decir el número de rondas
+    #Bucle para jugar la cantidad de rondas escogidas.
+    while True:
+        for ronda in range(rondas):
             print(f"\n🔄 Ronda {ronda + 1} de {rondas}")
             print("\nOpciones: 1) Piedra  2) Papel  3) Tijeras")
-# Se obtiene la elección del jugador con tiempo
-            eleccion_usuario = obtener_eleccion_tiempo(f"{nombre_jugador}, elija una opción (1-3): ") 
 
-            if not eleccion_usuario:
-                print(f"⏳ Se acabó el tiempo, {nombre_jugador} pierde esta ronda automáticamente.")
-                estadisticas["computadora_ganadas"] += 1
+            while True: #Se obtiene la elección del usuario con un tiempo límite
+                eleccion_usuario = obtener_eleccion_tiempo(f"{nombre_jugador}, elija una opción (1-3): ")
+                # Si el tiempo se agotó, el usuario pierde automáticamente la ronda
+                if not eleccion_usuario:
+                    print(f"⏳ Se acabó el tiempo, {nombre_jugador} pierde esta ronda automáticamente.")
+                    estadisticas["computadora_ganadas"] += 1
+                    estadisticas["total_partidas"] += 1
+                    estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} perdió - Computadora ganó")
+                    break  # Se termina la ronda y pasa a la siguiente
+                # Validación de la entrada del usuario
+                if eleccion_usuario not in ["1", "2", "3"]:
+                    print("❌ Opción inválida. Por favor, elige 1, 2 o 3.")
+                    continue  # Permite que el usuario reingrese una opción correcta en la misma ronda
+                # Convierte la opción ingresada en su equivalente en texto
+                eleccion_usuario = opciones[int(eleccion_usuario) - 1]
+                eleccion_pc = random.choice(opciones) # La computadora elige aleatoriamente
+                # Se muestran las elecciones realizadas
+                print(f"\n{nombre_jugador} eligió: {eleccion_usuario}")
+                print(f"Computadora eligió: {eleccion_pc}")
+                # Determina el resultado de la ronda
+                resultado = determinar_ganador(eleccion_usuario, eleccion_pc)
+                # Se registran las estadísticas de la partida
+                if resultado == "jugador1":
+                    print(f"\n🏆 ¡{nombre_jugador} gana esta ronda! 🎉")
+                    estadisticas["jugador_1_ganadas"] += 1
+                elif resultado == "empate":
+                    print("\n🤝 ¡Empate!")
+                    estadisticas["empates"] += 1
+                else:
+                    print("\n💻 ¡La computadora gana esta ronda! 😞")
+                    estadisticas["computadora_ganadas"] += 1
+
                 estadisticas["total_partidas"] += 1
+                if resultado == "jugador1":
+                    estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} ganó - Computadora perdió")
+                elif resultado == "empate":
+                    estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} empató - Computadora empató")
+                else:
+                    estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} perdió - Computadora ganó")
 
-                estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} perdió - Computadora ganó")
+                break  # Termina la ronda correctamente y pasa a la siguiente
 
-                continue # Pasa a la siguiente ronda
-
-            eleccion_usuario = opciones[int(eleccion_usuario) - 1]
-            eleccion_pc = random.choice(opciones) #En esta parte utilizamos la biblioteca de random para que la computadora escoja una opción aleatoriamente
-
-            print(f"\n{nombre_jugador} eligió: {eleccion_usuario}")
-            print(f"Computadora eligió: {eleccion_pc}")
-
-            resultado = determinar_ganador(eleccion_usuario, eleccion_pc)
-# Se imprime quién gana la ronda
-            if resultado == "jugador1":
-                print(f"\n🏆 ¡{nombre_jugador} gana esta ronda! 🎉")
-                estadisticas["jugador_1_ganadas"] += 1
-            elif resultado == "empate":
-                print("\n🤝 ¡Empate!")
-                estadisticas["empates"] += 1
-            else:
-                print("\n💻 ¡La computadora gana esta ronda! 😞")
-                estadisticas["computadora_ganadas"] += 1
-
-            estadisticas["total_partidas"] += 1 # Se incrementa el total de partidas después de registrar la partida
-            #Esta parte utilizamos las condicionales para registrar el historial además se usó append para poder guardar los registros de las rondas anteriores.
-            if resultado == "jugador1":
-                estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} ganó - Computadora perdió")
-            elif resultado == "empate":
-                estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} empató - Computadora empató")
-            else:
-                estadisticas["historico"].append(f"Partida {estadisticas['total_partidas']}: {nombre_jugador} perdió - Computadora ganó")
-            
         if not jugar_otra_vez():
-            break  # Si el jugador no quiere jugar de nuevo, sale del bucle y vuelve al menú principal
+            break  # Si el jugador no quiere jugar de nuevo, regresa al menú principal
 
-def jugar_multijugador(): # Esta función es creada para que se pueda jugar con 2 personas en una misma partida. Ademas sus elecciones no son visibles. Esto gracias a la biblioteca getpass importada en este código
+
+
+def jugar_multijugador():
     """Modo de juego entre dos jugadores"""
     opciones = ["Piedra", "Papel", "Tijeras"]
 
@@ -122,39 +130,59 @@ def jugar_multijugador(): # Esta función es creada para que se pueda jugar con 
     jugador_1 = input("Nombre del Jugador 1: ")
     jugador_2 = input("Nombre del Jugador 2: ")
 
-    while True: # Se mantiene el bucle para que los jugadores puedan repetir el juego si así lo desean.
+    while True:
         try:
-            rondas = int(input(f"{jugador_1} y {jugador_2}, ¿cuántas rondas desean jugar? (Ingrese un número): ")) #En esta aprte se utilizó int para que ingresen números enteres e input para que el jugador pueda poner el número
+            rondas = int(input(f"{jugador_1} y {jugador_2}, ¿cuántas rondas desean jugar? (Ingrese un número): "))
             if rondas <= 0:
                 print("Debe ingresar un número mayor a 0.")
                 continue
             break
-        except ValueError: #Esta fue para cuando registran un valor no valido
+        except ValueError:
             print("Entrada inválida. Ingrese un número válido.")
 
-    while True:  # Se agrega un bucle para repetir el juego
+    while True:
         for ronda in range(rondas):
             print(f"\n🔄 Ronda {ronda + 1} de {rondas}")
             print("\nOpciones: 1) Piedra  2) Papel  3) Tijeras")
-# Se ejecuta el temproizador y si el jugador no escoge una opción se marca como perdida y se suma a las estadísticas a favor del otro jugador.
-            eleccion_1 = obtener_eleccion_tiempo(f"{jugador_1}, elija una opción (1-3) en secreto: ", ocultar=True)
-            if not eleccion_1:
-                print(f"⏳ Se acabó el tiempo, {jugador_1} pierde esta ronda automáticamente.")
-                actualizar_estadisticas("jugador2", jugador_1, jugador_2)
+
+            # Elección del jugador 1 con validación
+            while True:
+                eleccion_1 = obtener_eleccion_tiempo(f"{jugador_1}, elija una opción (1-3) en secreto: ", ocultar=True)
+                if not eleccion_1:  # Si el jugador no responde a tiempo
+                    print(f"⏳ Se acabó el tiempo, {jugador_1} pierde esta ronda automáticamente.")
+                    actualizar_estadisticas("jugador2", jugador_1, jugador_2)
+                    break  # Sale del bucle para pasar a la siguiente ronda
+
+                if eleccion_1.isdigit() and int(eleccion_1) in [1, 2, 3]:  # Validar que la entrada esté en el rango
+                    eleccion_1 = opciones[int(eleccion_1) - 1]
+                    break
+                else:
+                    print("❌ Opción inválida. Por favor, elige 1, 2 o 3.")
+
+            if not eleccion_1:  # Si el jugador 1 perdió la ronda, no se pregunta al jugador 2
                 continue
 
-            eleccion_2 = obtener_eleccion_tiempo(f"{jugador_2}, elija una opción (1-3) en secreto: ", ocultar=True)
-            if not eleccion_2:
-                print(f"⏳ Se acabó el tiempo, {jugador_2} pierde esta ronda automáticamente.")
-                actualizar_estadisticas("jugador1", jugador_1, jugador_2)
+            # Elección del jugador 2 con validación
+            while True:
+                eleccion_2 = obtener_eleccion_tiempo(f"{jugador_2}, elija una opción (1-3) en secreto: ", ocultar=True)
+                if not eleccion_2:  # Si el jugador no responde a tiempo
+                    print(f"⏳ Se acabó el tiempo, {jugador_2} pierde esta ronda automáticamente.")
+                    actualizar_estadisticas("jugador1", jugador_1, jugador_2)
+                    break  # Sale del bucle para pasar a la siguiente ronda
+
+                if eleccion_2.isdigit() and int(eleccion_2) in [1, 2, 3]:  # Validar que la entrada esté en el rango
+                    eleccion_2 = opciones[int(eleccion_2) - 1]
+                    break
+                else:
+                    print("❌ Opción inválida. Por favor, elige 1, 2 o 3.")
+
+            if not eleccion_2:  # Si el jugador 2 perdió la ronda, no se evalúa el resultado
                 continue
 
-            eleccion_1 = opciones[int(eleccion_1) - 1]
-            eleccion_2 = opciones[int(eleccion_2) - 1]
-
+            # Mostrar elecciones y determinar el ganador
             print(f"\n{jugador_1} eligió: {eleccion_1}")
             print(f"{jugador_2} eligió: {eleccion_2}")
-# Se imprime quién gana la partida, en esta parte se imprime el nombre que coloca cad jugador
+
             resultado = determinar_ganador(eleccion_1, eleccion_2)
             if resultado == "empate":
                 print("\n🤝 ¡Empate!")
@@ -169,24 +197,32 @@ def jugar_multijugador(): # Esta función es creada para que se pueda jugar con 
             break  # Si no quiere repetir, se sale del bucle y vuelve al menú principal
 
 
-def obtener_eleccion_tiempo(mensaje, ocultar=False): # Esta función nos permite añadir el temporizador, si el jugador se tarda mucho pierde y el otro gana.
-    """Función que permite ingresar una opción con un tiempo límite"""
-    eleccion = [None] #Se usa una Lista para poder modificar su valor dentro del temporizador
+def obtener_eleccion_tiempo(mensaje, ocultar=False):
+    """Función que permite ingresar una opción con un tiempo límite sin permitir múltiples entradas después del tiempo."""
+    eleccion = [None]  # Se usa una lista mutable para modificar su valor dentro del temporizador
+    tiempo_agotado = [False]  # Bandera para indicar si el tiempo se agotó
 
-    def temporizador(): #Esta se define como una función que actúa como el temporizador.
-        time.sleep(10) #La función espera 10 segundo antes continuar.
-        if eleccion[0] is None: #Esto verifica si el usuario no ha escogido la opción durante los 10 segundos. En caso de no insertar nada se imprime que se acabo el tiempo.
-            print("\n⏳ Se acabó el tiempo, perdiste esta ronda automáticamente.")
+    def temporizador():
+        time.sleep(10)  # Esperar 10 segundos
+        if eleccion[0] is None:
+            print("\n⏳ Se acabó el tiempo, perdiste esta ronda automáticamente. Presiona ENTER 2 veces para continuar")
+            tiempo_agotado[0] = True  # Marcar que el tiempo se agotó
 
-    thread = threading.Thread(target=temporizador) # En esta parte se utilizó la biblioteca de Threading para que se pueda crear el temproizador
-    thread.start() # Esto para que la cuenta regresiva comience
+    # Iniciar temporizador en un hilo
+    thread = threading.Thread(target=temporizador)
+    thread.start()
 
-    if ocultar: #Esto es para que se pueda ocultar las opciones en el modo multijugador
-        eleccion[0] = getpass.getpass(mensaje) # Se usó la biblioteca de getpass para ocultar las entradas de las opciones en el modo multijugador
+    if ocultar:
+        eleccion[0] = getpass.getpass(mensaje)  # Se usa getpass para ocultar la entrada en modo multijugador
     else:
-        eleccion[0] = input(mensaje) #input en esta parte nos permite capturar la entrada normalmente a pesar de que no pueda verse
+        eleccion[0] = input(mensaje)  # Captura la entrada del usuario
 
-    return eleccion[0] # Se devuelve a la elección
+    # Si el tiempo se agotó, esperar solo una tecla y avanzar sin pedir input de nuevo
+    if tiempo_agotado[0]:
+        sys.stdin.read(1)  # Captura una sola tecla y descarta cualquier otro input
+        return None  # Retorna None para indicar que el jugador perdió la ronda
+
+    return eleccion[0]  # Devuelve la elección válida si el usuario respondió a tiempo
 
 def determinar_ganador(jugador1, jugador2): # Esta función es para definir la lógica para comparar las elecciones y definir un ganador
     """Determina el resultado de la partida"""
